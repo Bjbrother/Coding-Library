@@ -2,12 +2,12 @@ const int N = 1e5 + 10;
 
 vii g[N];
 
-vi dist(N,LLONG_MAX),vis(N,0);
+vi dist(N,LLONG_MAX),vis(N,0),parent(N,-1);
 
 void dijkstra(ll s)
 {
 	dist[s]=0;
-	multiset<pair<ll,ll> >ms;
+	set<pair<ll,ll> >ms;
 
 	ms.insert({0,s});
 
@@ -29,12 +29,19 @@ void dijkstra(ll s)
 			ll weight = g[x][i].ss;
 			if(dist[x]+weight<dist[it])
 			{
+				if(dist[it]!=LLONG_MAX)
+				{
+					ms.erase({dist[it],it});
+				}
 				dist[it]= dist[x]+weight;
 				ms.insert({dist[it],it});
+				parent[it] = x;
 			}
 		}
 
 	}
 
 }
+
+
 
